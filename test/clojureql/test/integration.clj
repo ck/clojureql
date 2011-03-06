@@ -196,7 +196,11 @@
 (database-test test-pick
   (is (= @(-> (select users (where (= :id 4)))
               (pick :name))
-         "Frank")))
+         "Frank"))
+  (is (= @(-> users
+              (aggregate [:count/id :as :cnt])
+              (pick :cnt))
+         4)))
 
 (database-test test-composing-transforms
   (is (= @(-> users
